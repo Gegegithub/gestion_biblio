@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #040f3a;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        .profile-container {
+            background: #0D255A;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .user-stats {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .user-stat-box {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #040f3a;
+            min-width: 120px;
+            border: 1px solid #5EB727;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5EB727;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: white;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-icon {
+            font-size: 40px;
+            margin-right: 15px;
+            color: #5EB727;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #5EB727;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .info-row {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #e4e435;
+            min-width: 120px;
+            display: inline-block;
+        }
+
+        .info-value {
+            color: white;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #5EB727;
+        }
+
+        .history-title {
+            font-weight: bold;
+            color: #e4e435;
+        }
+
+        .history-date {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5EB727;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn-back:hover {
+            background-color: #e4e435;
+            text-decoration: none;
+            color: black;
+        }
+        
+        .text-muted {
+            color: #ccc !important;
+        }
+        
+        h2 {
+            color: white;
+        }
+        
+        .btn-info {
+            background-color: #5EB727;
+            border-color: #5EB727;
+            color: black;
+        }
+        
+        .btn-info:hover {
+            background-color: #e4e435;
+            border-color: #e4e435;
+            color: black;
+        }
+        
+        /* Styles pour les sections déroulantes */
+        .collapsible {
+            background-color: #040f3a;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #5EB727;
+        }
+        
+        .collapsible-active, .collapsible:hover {
+            background-color: #0D255A;
+        }
+        
+        .collapsible:after {
+            content: '\002B';
+            color: #e4e435;
+            font-weight: bold;
+            margin-left: 5px;
+            font-size: 20px;
+        }
+        
+        .collapsible-active:after {
+            content: "\2212";
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #0D255A;
+            border-radius: 0 0 5px 5px;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+        
+        .section-heading {
+            color: #e4e435;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <i class="fas fa-user-circle profile-icon"></i>
+                        <h2>Mes informations personnelles</h2>
+                    </div>
+                    
+                    <div class="user-stats">
+                        <div class="user-stat-box">
+                            <div class="stat-number">{{ historique_emprunts.count }}</div>
+                            <div class="stat-label">Emprunts récents</div>
+                        </div>
+                        <div class="user-stat-box">
+                            <div class="stat-number">{{ utilisateur.age|default:"--" }}</div>
+                            <div class="stat-label">Âge</div>
+                        </div>
+                        <div class="user-stat-box">
+                            <div class="stat-number">{{ utilisateur.get_sexe_display|default:"--" }}</div>
+                            <div class="stat-label">Sexe</div>
+                        </div>
+                    </div>
+                    
+                    <button class="collapsible">
+                        <h3 class="section-heading">Informations du compte</h3>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="info-row">
+                            <span class="info-label">Nom d'utilisateur :</span>
+                            <span class="info-value">{{ utilisateur.username }}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Nom :</span>
+                            <span class="info-value">{{ utilisateur.last_name }}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Prénom :</span>
+                            <span class="info-value">{{ utilisateur.first_name }}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Email :</span>
+                            <span class="info-value">{{ utilisateur.email }}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Date d'inscription :</span>
+                            <span class="info-value">{{ utilisateur.date_joined|date:"d/m/Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <button class="collapsible">
+                        <h3 class="section-heading"><i class="fas fa-history mr-2"></i>Historique des emprunts récents</h3>
+                    </button>
+                    <div class="collapsible-content">
+                        {% if historique_emprunts %}
+                            <ul class="history-list">
+                                {% for emprunt in historique_emprunts %}
+                                    <li class="history-item">
+                                        <div class="history-title">{{ emprunt.livre.titre }}</div>
+                                        <div class="text-muted">par {{ emprunt.livre.auteur }}</div>
+                                        <div class="history-date">Emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">Vous n'avez pas encore emprunté de livres.</p>
+                        {% endif %}
+                        
+                        {% if historique_emprunts %}
+                            <div class="text-center mt-3">
+                                <a href="{% url 'bibliotheque:mes_emprunts' %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-list mr-1"></i> Voir tous mes emprunts
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="{% url 'bibliotheque:home' %}" class="btn-back">
+                        <i class="fas fa-arrow-left mr-2"></i>Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Script pour les sections déroulantes
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("collapsible-active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+        
+        // Ouvrir la première section par défaut
+        document.getElementsByClassName("collapsible")[0].click();
+    </script>
+</body>
+</html>

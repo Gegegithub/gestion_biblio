@@ -1,0 +1,41 @@
+<!-- connexion.html -->
+{% load static %}
+{% load django_browser_reload %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Connexion</title>
+</head>
+<body>
+    <div class="form-container">
+        {% comment %} <div class="logo-container">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+        </div> {% endcomment %}
+        
+        <h2>Se connecter à son compte</h2>
+        
+        <form method="POST" action="{% url 'custom_auth:connexion' %}">
+            {% csrf_token %}
+            <div align="center">
+                <input type="text" name="username_or_email" placeholder="Nom d'utilisateur ou Email" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+            </div>
+            <div align="center">
+                <button type="submit">Se connecter</button>
+            </div>
+        </form>
+        
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %} 
+        
+        <div class="pas">
+            <p>Pas encore de compte ? <a href="{% url 'custom_auth:inscription' %}">S'inscrire ici</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

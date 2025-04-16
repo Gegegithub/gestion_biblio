@@ -1,0 +1,315 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque</title>
+    <style>
+        /* Styles généraux */
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0A1F44;
+            padding: 10px 20px;
+        }
+
+        .logo img, .user-profile img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Conteneur principal */
+        .container {
+            display: flex;
+            position: relative;
+        }
+
+        /* Menu latéral */
+        aside {
+            background-color: #1E1E1E;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            width: 0;
+            overflow: hidden;
+            padding: 0;
+            margin-top: 60px; /* Pour laisser de la place au header */
+        }
+
+        aside.open {
+            width: 250px;
+            padding: 20px;
+        }
+
+        aside ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        aside ul li {
+            margin: 15px 0;
+        }
+
+        /* Contenu principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+            width: 100%;
+        }
+
+        .main-content.shifted {
+            margin-left: 250px;
+        }
+
+        /* Bouton pour ouvrir/fermer le menu */
+        .menu-toggle {
+            position: fixed;
+            top: 70px;
+            left: 10px;
+            z-index: 1001;
+            background-color: #5EB727;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background-color: #e4e435;
+        }
+
+        /* Barre de recherche */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar form {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: 2px solid #0A1F44;
+            background-color: #292929;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .search-bar button {
+            padding: 12px 25px;
+            background-color: #0A1F44;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #007BFF;
+        }
+
+        /* Grille de livres */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .book-card {
+            background-color: #292929;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: scale(1.05);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .book-card a {
+            display: block;
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #0A1F44;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .book-card a:hover {
+            background-color: #0c2a6e;
+        }
+
+        aside ul li a {
+            display: block;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color:#0A1F44;
+            padding: 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+            text-align: center;
+        }
+    
+        aside ul li a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Animation du bouton menu */
+        .menu-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle.open i {
+            transform: rotate(90deg);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .main-content.shifted {
+                margin-left: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1>Bibliothèque</h1>
+    </header>
+
+    <!-- Overlay pour fermer le menu en cliquant ailleurs -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Bouton pour ouvrir/fermer le menu -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="container">
+        <!-- Menu latéral -->
+        <aside id="sidebar">
+            <ul>
+                <li><a href="{% url 'bibliotheque:profil' %}">Mes informations personnelles</a></li>
+                {% comment %} <li><a href="{% url 'bibliotheque:mes_emprunts' %}">Liste des livres empruntés</a></li> {% endcomment %}
+            </ul>
+        </aside>
+        
+        <!-- Contenu principal -->
+        <div class="main-content" id="mainContent">
+            <!-- Barre de recherche -->
+            <div class="search-bar">
+                <form method="GET" action="{% url 'bibliotheque:home' %}">
+                    <input type="text" name="search" placeholder="Rechercher un livre..." value="{{ request.GET.search }}">
+                    <button type="submit">Rechercher</button>
+                </form>
+            </div>
+
+            <!-- Grille des livres -->
+            <div class="book-grid">
+                {% for livre in livres %}
+                    <div class="book-card">
+                        <img src="{{ livre.image.url }}" alt="{{ livre.titre }}"
+                        <p><strong>{{ livre.titre }}</strong></p>
+                        <a href="{% url 'bibliotheque:detail' livre.id %}">Voir plus</a>
+                    </div>
+                {% empty %}
+                    <p>Aucun livre disponible.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const overlay = document.getElementById('overlay');
+            
+            // Fonction pour ouvrir/fermer le menu
+            function toggleMenu() {
+                sidebar.classList.toggle('open');
+                mainContent.classList.toggle('shifted');
+                menuToggle.classList.toggle('open');
+                overlay.classList.toggle('show');
+            }
+            
+            // Événement click pour le bouton du menu
+            menuToggle.addEventListener('click', toggleMenu);
+            
+            // Événement click pour l'overlay
+            overlay.addEventListener('click', toggleMenu);
+        });
+    </script>
+
+</body>
+</html>

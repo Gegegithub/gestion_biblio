@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes livres empruntés</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        h2 { color: #0A1F44; }
+        ul { list-style: none; padding: 0; }
+        li { 
+            background-color: #1E1E1E; 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .btn { 
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background-color: #0056b3; }
+        .btn-return {
+            background-color: #28A745;
+        }
+        .btn-return:hover { background-color: #218838; }
+        .empty { color: #BBBBBB; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Mes livres empruntés</h2>
+
+        {% if emprunts %}
+            <ul>
+                {% for emprunt in emprunts %}
+                    <li>
+                        <span>{{ emprunt.livre.titre }} - Emprunté le {{ emprunt.date_emprunt }}</span>
+                        <form action="{% url 'bibliotheque:retourner_livre' emprunt.livre.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-return">Retourner</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty">Vous n'avez emprunté aucun livre.</p>
+        {% endif %}
+
+        <a href="{% url 'bibliotheque:home' %}" class="btn">Retour à l'accueil</a>
+    </div>
+
+</body>
+</html>
