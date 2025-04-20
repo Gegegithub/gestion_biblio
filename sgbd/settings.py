@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'custom_auth',  # Application pour l'authentification personnalisée
     'django_browser_reload',  # Pour recharger la page lors des modifications
-    'bibliotheque',  # application qre la bibliotheque
+    'bibliotheque',  # Application pour la bibliothèque
 ]
 
 # Middleware
@@ -119,16 +119,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Si vous avez un dossier static global
-STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
+
+# Le dossier 'static' où tu mets tes fichiers statiques
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Si tu veux un dossier global pour les fichiers statiques
+
+# Le dossier où collectstatic va copier les fichiers lors de la mise en production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Use custom user model
 AUTH_USER_MODEL = "custom_auth.CustomUser"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, "media"))
+# Media files (uploading files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Email settings
 EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
