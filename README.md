@@ -38,12 +38,6 @@ source venv/bin/activate  # Sur Windows : venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 📱 Captures d'écran
-
-![Page d'accueil](captures/accueil.png)
-![Profil utilisateur](captures/profil.png)
-*(Note: Remplacez avec vos propres captures d'écran)*
-
 ## 🤝 Contribuer
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
