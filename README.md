@@ -1,5 +1,4 @@
-Un site web simpliste de gestion de bibliothèque développée avec Django, proposant une interface utilisateur intuitive.
-un petit projet juste pour tester Django
+Ce projet est mon tout premier site en Django. Un site web simpliste de gestion de bibliothèque, proposant une interface utilisateur intuitive.
 
 ## Apparence
 
