@@ -23,7 +23,7 @@ Ce projet est une application de gestion de bibliothèque qui permet aux utilisa
 
 1. Clonez ce dépôt :
 ```bash
-git clone https://github.com/votre-username/biblio.git
+git clone https://github.com/gegegithub/biblio.git
 cd biblio
 ```
 
