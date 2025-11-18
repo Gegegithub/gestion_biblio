@@ -5,9 +5,9 @@ un petit projet juste pour tester Django
 
 <img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/32752cb2-4c7a-40f5-8555-7a2ebebe8bb1" />
 <img width="1919" height="1059" alt="Image" src="https://github.com/user-attachments/assets/df541c4e-841d-4038-a615-e6e15a96dd2b" />
-<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/5e92eba5-adb1-4363-bea9-f85ce0fa7c21" />
 <img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/300865fe-da55-4c45-b568-fc57b4870626" />
 <img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/594a2528-70c9-481a-bd2b-7a965d539577" />
+<img width="1919" height="1079" alt="Image" src="https://github.com/user-attachments/assets/5e92eba5-adb1-4363-bea9-f85ce0fa7c21" />
 
 ## Présentation
 
